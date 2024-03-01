@@ -2,139 +2,142 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EmptyRoom</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <style>
-      * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EmptyRoom</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
 
- body {
-    /* background-color: #E4E9FD;
+    body {
+      /* background-color: #E4E9FD;
     background-image: -webkit-linear-gradient(60deg, #A683E3 50%, #E4E9FD 50%);
     min-height: 1000px; */
-    background: linear-gradient(300deg, #c188f4, #eb9aff, #945bf6);
-    background-size: 180% 180%;
-    animation: gradient-animation 18s ease infinite;
-    font-family: 'helvetica neue';
-    display: flex;
-    justify-content: center;
-  }
-
-  .main-box{
-    display: flex;
-    align-items: center;
-    width: 83%;
-    align-items: center;
-    box-shadow: 5px 5px 5px black;
-    margin-top: 80px;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 700;
-  }
-
-  .gradient-background{
-    background: linear-gradient(300deg, #c188f4, #eb9aff, #945bf6);
-    background-size: 180% 180%;
-    animation: gradient-animation 18s ease infinite;
-  }
-
-  .waviy {
-    position: relative;
-  }
-  .waviy span {
-    position: relative;
-    display: inline-block;
-    font-size: 70px;
-    color: #170d0d;
-    text-transform: uppercase;
-    animation: flip 3s infinite;
-    animation-delay: calc(.2s * var(--i))
-  }
-  @keyframes flip {
-    0%,80% {
-      transform: rotateY(360deg) 
+      background: linear-gradient(300deg, #c188f4, #eb9aff, #945bf6);
+      background-size: 180% 180%;
+      animation: gradient-animation 18s ease infinite;
+      font-family: 'helvetica neue';
+      display: flex;
+      justify-content: center;
     }
-  }
 
-  .main-form{
-    font-size: 30px;
-  }
+    .main-box {
+      display: flex;
+      align-items: center;
+      width: 83%;
+      align-items: center;
+      box-shadow: 5px 5px 5px black;
+      margin-top: 80px;
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: 700;
+    }
 
-  @media only screen and (max-width: 768px) {
+    .gradient-background {
+      background: linear-gradient(300deg, #c188f4, #eb9aff, #945bf6);
+      background-size: 180% 180%;
+      animation: gradient-animation 18s ease infinite;
+    }
 
-/* For mobile phones: */
-[class*="col-"] {
-    width: 100%;
-    font-size: 16px;
-}
-}
+    .waviy {
+      position: relative;
+    }
 
+    .waviy span {
+      position: relative;
+      display: inline-block;
+      font-size: 70px;
+      color: #170d0d;
+      text-transform: uppercase;
+      animation: flip 3s infinite;
+      animation-delay: calc(.2s * var(--i))
+    }
 
-    </style>
+    @keyframes flip {
+
+      0%,
+      80% {
+        transform: rotateY(360deg)
+      }
+    }
+
+    .main-form {
+      font-size: 30px;
+    }
+
+    @media only screen and (max-width: 768px) {
+
+      /* For mobile phones: */
+      [class*="col-"] {
+        width: 100%;
+        font-size: 16px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container col-xl-10 col-xxl-8 px-4 py-5 gradient-background main-box">
-        <div class="row align-items-center g-lg-5 py-5">
-          <div class="col-lg-7 text-center text-lg-start waviy">
-            <h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3">Find <span>EmptyRoom</span> near you !!</h1>
-            <ul class="col-lg-10 fs-4" list-style-type="none">
-                <li class="typewriter">Bored by Silence of Library ?</li>
-                <li class="typewriter">Want to chill with friends ?</li>
-                <li class="typewriter">Searching room for Extra Class ?</li>
-                <p>Don't worry guys we got cover it for you...</p>
-            </ul>
-        </div>
-          <div class="col-md-10 mx-auto col-lg-5">
-            <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary main-form" action="/" method="post">
-                <div class="days">
-                    <label for="day" placeholder="day">Choose a Day:</label>
-                            <select name="day" id="days">
-                                <option value="Monday">MONDAY</option>
-                                <option value="Tuesday">TUESDAY</option>
-                                <option value="Wednesday">WEDNESDAY</option>
-                                <option value="Thursday">THURSDAY</option>
-                                <option value="Friday">FRIDAY</option>
-                            </select>
-                </div>
-                <div class="block">
-                    <label for="block">Choose a Block:</label>
-                            <select name="block" id="blocks">
-                                <option value="A">A</option>
-                                <!-- <option value="B">B</option> -->
-                                <option value="C">C</option>
-                                <option value="D">D</option>
-                                <option value="E">E</option>
-                                <option value="F">F</option>
-                            </select>
-                </div>
-                <div class="time">
-                  <label for="time">Time:</label>
-                          <select name="time" id="times">
-                              <option value="9">9</option>
-                              <option value="10">10</option>
-                              <option value="11">11</option>
-                              <option value="12">12</option>
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                          </select>
-              </div>
-
-              <button class="w-100 btn btn-lg btn-primary" type="submit">Find a Room</button>
-            </form>
-          </div>
-        </div>
+  <div class="container col-xl-10 col-xxl-8 px-4 py-5 gradient-background main-box">
+    <div class="row align-items-center g-lg-5 py-5">
+      <div class="col-lg-7 text-center text-lg-start waviy">
+        <h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3">Find <span>EmptyRoom</span> near you !!</h1>
+        <ul class="col-lg-10 fs-4" list-style-type="none">
+          <li class="typewriter">Bored by Silence of Library ?</li>
+          <li class="typewriter">Want to chill with friends ?</li>
+          <li class="typewriter">Searching room for Extra Class ?</li>
+          <p>Don't worry guys we got cover it for you...</p>
+        </ul>
       </div>
+      <div class="col-md-10 mx-auto col-lg-5">
+        <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary main-form" action="/" method="post">
+          <div class="days">
+            <label for="day" placeholder="day">Choose a Day:</label>
+            <select name="day" id="days">
+              <option value="Monday">MONDAY</option>
+              <option value="Tuesday">TUESDAY</option>
+              <option value="Wednesday">WEDNESDAY</option>
+              <option value="Thursday">THURSDAY</option>
+              <option value="Friday">FRIDAY</option>
+            </select>
+          </div>
+          <div class="block">
+            <label for="block">Choose a Block:</label>
+            <select name="block" id="blocks">
+              <option value="A">A</option>
+              <!-- <option value="B">B</option> -->
+              <option value="C">C</option>
+              <option value="D">D</option>
+              <option value="E">E</option>
+              <option value="F">F</option>
+            </select>
+          </div>
+          <div class="time">
+            <label for="time">Time:</label>
+            <select name="time" id="times">
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+
+          <button class="w-100 btn btn-lg btn-primary" type="submit">Find a Room</button>
+        </form>
+      </div>
+    </div>
+  </div>
 
 
-      <!-- <footer class="footer mt-auto py-3 bg-body-tertiary base-end">
+  <!-- <footer class="footer mt-auto py-3 bg-body-tertiary base-end">
         <div class="container">
           <span class="text-body-secondary">Place sticky footer content here.</span>
         </div>

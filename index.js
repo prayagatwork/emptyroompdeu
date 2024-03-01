@@ -72,7 +72,7 @@ app.post('/', async (req, res) => {
             res.render('outcome', {ejslists : roomsWithTimeSlot});
         } else {
             console.log('No rooms found with the specified time slot');
-            res.json({ message: 'No rooms found with the specified time slot' });
+            res.render('noroom');
         }
     } catch (err) {
         console.error('Error finding block schedule:', err);
