@@ -15,140 +15,202 @@
     }
 
     body {
-      /* background-color: #E4E9FD;
-    background-image: -webkit-linear-gradient(60deg, #A683E3 50%, #E4E9FD 50%);
-    min-height: 1000px; */
       background: linear-gradient(300deg, #c188f4, #eb9aff, #945bf6);
       background-size: 180% 180%;
       animation: gradient-animation 18s ease infinite;
-      font-family: 'helvetica neue';
+      font-family: 'Helvetica Neue', sans-serif;
       display: flex;
       justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    @keyframes gradient-animation {
+      0% {
+        background-position: 0% 0%;
+      }
+      100% {
+        background-position: 100% 100%;
+      }
     }
 
     .main-box {
       display: flex;
       align-items: center;
-      width: 83%;
-      align-items: center;
-      box-shadow: 5px 5px 5px black;
-      margin-top: 80px;
-      font-family: 'Courier New', Courier, monospace;
-      font-weight: 700;
-    }
-
-    .gradient-background {
-      background: linear-gradient(300deg, #c188f4, #eb9aff, #945bf6);
-      background-size: 180% 180%;
-      animation: gradient-animation 18s ease infinite;
+      justify-content: center;
+      width: 90%;
+      max-width: 1200px;
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      border-radius: 10px;
+      background: white;
+      margin-top: 50px;
     }
 
     .waviy {
       position: relative;
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+
+    .waviy h1 {
+      font-size: 3rem;
+      color: #333;
+      text-transform: uppercase;
+      font-weight: bold;
+      margin-bottom: 20px;
+      animation: slideIn 2s ease-in-out;
     }
 
     .waviy span {
       position: relative;
       display: inline-block;
-      font-size: 70px;
-      color: #170d0d;
+      font-size: 3.5rem;
+      color: #ff007f;
       text-transform: uppercase;
       animation: flip 3s infinite;
-      animation-delay: calc(.2s * var(--i))
+      animation-delay: calc(.2s * var(--i));
     }
 
-    @keyframes flip {
-
-      0%,
-      80% {
-        transform: rotateY(360deg)
+    @keyframes slideIn {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
       }
     }
 
+    @keyframes flip {
+      0%, 80% {
+        transform: rotateY(360deg);
+      }
+    }
+
+    .typewriter {
+      overflow: hidden;
+      font-family: 'Courier New', Courier, monospace;
+      border-right: .15em solid #333;
+      white-space: nowrap;
+      animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #333 }
+    }
+
     .main-form {
-      font-size: 30px;
+      font-size: 1.2rem;
+    }
+
+    .main-form label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    .main-form select {
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      margin-bottom: 1rem;
+    }
+
+    .main-form button {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.2rem;
     }
 
     @media only screen and (max-width: 768px) {
+      .main-box {
+        flex-direction: column;
+      }
 
-      /* For mobile phones: */
-      [class*="col-"] {
-        width: 100%;
-        font-size: 16px;
+      .waviy h1 {
+        font-size: 2.5rem;
+      }
+
+      .waviy span {
+        font-size: 3rem;
+      }
+
+      .main-form {
+        font-size: 1rem;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="container col-xl-10 col-xxl-8 px-4 py-5 gradient-background main-box">
-    <div class="row align-items-center g-lg-5 py-5">
+  <div class="container main-box">
+    <div class="row align-items-center g-lg-5">
       <div class="col-lg-7 text-center text-lg-start waviy">
-        <h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3">Find <span>EmptyRoom</span> near you !!</h1>
-        <ul class="col-lg-10 fs-4" list-style-type="none">
-          <li class="typewriter">Bored by Silence of Library ?</li>
-          <li class="typewriter">Want to chill with friends ?</li>
-          <li class="typewriter">Searching room for Extra Class ?</li>
-          <p>Don't worry guys we got cover it for you...</p>
+        <h1 class="display-4 fw-bold lh-1">Find <span>EmptyRoom</span> near you !!</h1>
+        <ul class="fs-4 list-unstyled">
+          <li class="typewriter">Bored by Silence of Library?</li>
+          <li class="typewriter">Want to chill with friends?</li>
+          <li class="typewriter">Searching room for Extra Class?</li>
         </ul>
+        <p>Don't worry, we’ve got you covered...</p>
       </div>
       <div class="col-md-10 mx-auto col-lg-5">
-        <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary main-form" action="/" method="post">
-          <div class="days">
-            <label for="day" placeholder="day">Choose a Day:</label>
+        <form class="p-4 p-md-5 border rounded-3 bg-light main-form" action="/" method="post">
+          <div class="mb-3">
+            <label for="days">Choose a Day:</label>
             <select name="day" id="days">
-              <option value="Monday">MONDAY</option>
-              <option value="Tuesday">TUESDAY</option>
-              <option value="Wednesday">WEDNESDAY</option>
-              <option value="Thursday">THURSDAY</option>
-              <option value="Friday">FRIDAY</option>
+              <option value="Monday">Monday</option>
+              <option value="Tuesday">Tuesday</option>
+              <option value="Wednesday">Wednesday</option>
+              <option value="Thursday">Thursday</option>
+              <option value="Friday">Friday</option>
             </select>
           </div>
-          <div class="block">
-            <label for="block">Choose a Block:</label>
+          <div class="mb-3">
+            <label for="blocks">Choose a Block:</label>
             <select name="block" id="blocks">
               <option value="A">A</option>
-              <!-- <option value="B">B</option> -->
               <option value="C">C</option>
               <option value="D">D</option>
               <option value="E">E</option>
               <option value="F">F</option>
             </select>
           </div>
-          <div class="time">
-            <label for="time">Time:</label>
+          <div class="mb-3">
+            <label for="times">Time:</label>
             <select name="time" id="times">
-              <option value="9">9</option>
-              <option value="10">10</option>
-              <option value="11">11</option>
-              <option value="12">12</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
+              <option value="9">9 AM</option>
+              <option value="10">10 AM</option>
+              <option value="11">11 AM</option>
+              <option value="12">12 PM</option>
+              <option value="1">1 PM</option>
+              <option value="2">2 PM</option>
+              <option value="3">3 PM</option>
+              <option value="4">4 PM</option>
+              <option value="5">5 PM</option>
             </select>
           </div>
-          <div class="type">
+          <div class="mb-3">
             <label for="type">Lab/Room:</label>
             <select name="type" id="type">
               <option value="lab">Lab</option>
               <option value="hall">Classroom</option>
             </select>
           </div>
-
-          <button class="w-100 btn btn-lg btn-primary" type="submit">Find a Room</button>
+          <button class="btn btn-primary" type="submit">Find a Room</button>
         </form>
       </div>
     </div>
   </div>
-
-
-  <!-- <footer class="footer mt-auto py-3 bg-body-tertiary base-end">
-        <div class="container">
-          <span class="text-body-secondary">Place sticky footer content here.</span>
-        </div>
-      </footer> -->
 </body>
 
 </html>
