@@ -1,15 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NoRoom</title>
+  <title>No Room Available</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(300deg, #f0e3fa, #cbc7ff, #dbf4fd);
+      background-size: 180% 180%;
+      animation: gradient-animation 18s ease infinite;
+      font-family: 'Helvetica Neue', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    @keyframes gradient-animation {
+      0% {
+        background-position: 0% 0%;
+      }
+      100% {
+        background-position: 100% 100%;
+      }
+    }
+
+    .main-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 90%;
+      max-width: 800px;
+      padding: 20px;
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .message {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .joke {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: #ff007f;
+      font-weight: bold;
+    }
+
+    .reassurance {
+      text-align: center;
+      font-size: 1rem;
+      color: #333;
+    }
+
+    @media only screen and (max-width: 768px) {
+      .message {
+        font-size: 1.2rem;
+      }
+
+      .joke {
+        font-size: 1rem;
+      }
+
+      .reassurance {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media only screen and (max-width: 480px) {
+      .message {
+        font-size: 1rem;
+      }
+
+      .joke {
+        font-size: 0.9rem;
+      }
+
+      .reassurance {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <h1 style="background-color: chartreuse;">
-      Sorry !! No room or block is found
-      <br>
-      Currently we are up for E-block (fully) and F-block (fully)
-    </h1>
+  <div class="container main-box">
+    <div class="message">
+      Oops! It looks like no room is available for the selected time slot. 😔
+    </div>
+    <div class="joke">
+      Why did the student bring a ladder to the library? To reach new heights in their studies! 📚
+    </div>
+    <div class="reassurance">
+      But don’t worry, the library is always open for all your study needs. Come anytime and enjoy the silence!
+    </div>
+  </div>
 </body>
+
 </html>

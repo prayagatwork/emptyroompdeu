@@ -201,6 +201,7 @@
             <label for="blocks">Choose a Block:</label>
             <select name="block" id="blocks">
               <option value="A">A</option>
+              <option value="B">B</option>
               <option value="C">C</option>
               <option value="D">D</option>
               <option value="E">E</option>
@@ -236,6 +237,33 @@
       Note: Lab and Classroom specifications are only available for E and F blocks.
     </div>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const blockSelect = document.getElementById('blocks');
+      const typeSelect = document.getElementById('type');
+      
+      blockSelect.addEventListener('change', function() {
+        const selectedBlock = this.value;
+        
+        if (selectedBlock === 'E' || selectedBlock === 'F') {
+          // Set options for blocks E and F
+          typeSelect.innerHTML = `
+            <option value="lab">Lab</option>
+            <option value="hall">Classroom</option>
+          `;
+        } else {
+          // Set options for other blocks
+          typeSelect.innerHTML = `
+            <option value="hall">Classroom</option>
+          `;
+        }
+      });
+
+      // Trigger change event on page load to ensure correct initial options
+      blockSelect.dispatchEvent(new Event('change'));
+    });
+  </script>
 </body>
 
 </html>
