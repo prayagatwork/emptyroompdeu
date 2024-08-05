@@ -71,17 +71,36 @@
         }
 
         .btn-primary {
-            background-color: #007bff;
-            border: none;
-            border-radius: 5px;
-            padding: 0.5rem 1rem;
-            font-size: 1rem;
-            transition: background-color 0.3s ease;
-        }
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Full width by default for small screens */
+    max-width: 45%; /* Limit width to 45% of the container */
+    display: block;
+    margin: 0 auto; /* Center the button */
+}
 
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+@media only screen and (max-width: 768px) {
+    .btn-primary {
+        width: 100%; /* Full width on small screens */
+        max-width: none; /* Remove max-width constraint */
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .btn-primary {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+}
+
 
         .footer {
             background-color: #f8f9fa;
@@ -101,36 +120,6 @@
             text-decoration: underline;
         }
 
-        @media only screen and (max-width: 768px) {
-            .modal-body {
-                padding: 1rem;
-            }
-
-            .room-container {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .room-container button {
-                margin-top: 1rem;
-                margin-left: 0;
-            }
-
-            .btn-primary {
-                width: 100%; /* Full width on small screens */
-            }
-        }
-
-        @media only screen and (max-width: 576px) {
-            .main-div {
-                padding: 1rem;
-            }
-
-            .btn-primary {
-                padding: 0.5rem;
-                font-size: 0.9rem;
-            }
-        }
     </style>
 </head>
 
