@@ -4,29 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Result page</title>
+    <title>Result Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
         * {
-            margin: 0px;
-            padding: 0px;
-            font-size: medium;
-            font-weight: 500;
-            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
         }
 
         body {
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background: linear-gradient(-45deg, #f7e5e0, #fdd5e3, #d7f3fc, #defff7);
             background-size: 400% 400%;
             animation: gradient 15s ease infinite;
-            height: 80vh;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .main-div {
-            margin-top: 10%;
-            align-content: center;
-            width: fit-content;
+            width: 90%;
+            max-width: 800px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 1rem;
         }
 
         @keyframes gradient {
@@ -43,30 +49,75 @@
             }
         }
 
-        .room-ary {
-            font-weight: 500;
+        .modal-body {
+            padding: 2rem;
         }
 
-        span {
-            font-size: 34px;
-            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-            font-weight: 600;
-            color: rgb(0, 0, 0);
+        .room-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid #ddd;
         }
 
-        a {
+        .room-container svg {
+            margin-right: 1rem;
+        }
+
+        .room-ary h5 {
+            font-size: 1.25rem;
+            margin-bottom: 0;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .footer {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            text-align: center;
+            border-top: 1px solid #ddd;
+            margin-top: 1rem;
+        }
+
+        .footer a {
             text-decoration: none;
-            font-size: 25px;
-            font-weight: 300;
-            color: rgb(221, 255, 0);
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
         }
 
         @media only screen and (max-width: 768px) {
+            .modal-body {
+                padding: 1rem;
+            }
 
-            /* For mobile phones: */
-            [class*="col-"] {
-                width: 100%;
-                font-size: 16px;
+            .room-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .room-container button {
+                margin-top: 1rem;
+                margin-left: 0;
+            }
+
+            .footer {
+                margin-top: 1rem;
             }
         }
     </style>
@@ -77,47 +128,49 @@
     <div class="modal modal-sheet position-static d-block p-4 py-md-1" tabindex="-1" role="dialog" id="modalTour">
         <div class="modal-dialog" role="document">
             <div class="modal-content rounded-4 shadow main-div">
-                <div class="modal-body p-5">
-                    <h2 class="fw-bold mb-0">Empty-Rooms</h2>
+                <div class="modal-body">
+                    <h2 class="fw-bold mb-4 text-center">Available Rooms</h2>
 
-                    <div class="container mt-5">
+                    <div class="container">
                         <div class="row">
                             <% ejslists.forEach(function(rooms){ %>
-                                <div class="col-sm-4 mb-4">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
-                                        class="bi bi-building" viewBox="0 0 16 16">
-                                        <path
-                                            d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z" />
-                                        <path
-                                            d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3z" />
-                                    </svg>
-                                    <div class="room-ary">
-                                        <h5 class="mb-0">
-                                            <%= rooms %>
-                                        </h5>
+                                <div class="col-sm-12 mb-3">
+                                    <div class="room-container">
+                                        <div class="d-flex align-items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                                                class="bi bi-building" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z" />
+                                                <path
+                                                    d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3z" />
+                                            </svg>
+                                            <div class="room-ary">
+                                                <h5 class="mb-0">
+                                                    <%= rooms %>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <a  href="/rsvp/<%= rooms %>" class="btn btn-primary btn-sm">Reserve</a>
                                     </div>
                                 </div>
-                                <% }); %>
+                            <% }); %>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-lg btn-primary mt-5 w-50"
+                    
+                    <div class="text-center mt-4">
+                        <span class="text-body-secondary">Presented to you by Prayag Thaker</span>
+                        <a href="https://www.linkedin.com/in/iamprayagthaker/" class="btn btn-link">View LinkedIn Profile</a>
+                    </div>
+
+                    <button type="button" class="btn btn-lg btn-primary mt-5 w-100"
                         onclick="location.href='https://forms.gle/7GKhZJaGv5xjEnnx5'"
-                        data-bs-dismiss="modal">FeedBack</button>
-                    <button type="button" class="btn btn-lg btn-primary mt-5 w-50"
-                        onclick="location.href='https://rsvp-yp21.onrender.com'"
-                        data-bs-dismiss="modal">Reserve</button>
+                        data-bs-dismiss="modal">Feedback</button>
                 </div>
             </div>
         </div>
     </div>
 
-</body>
 
-<footer class="footer mt-70% py-3 ">
-    <div class="container">
-        <span class="text-body-secondary">Presented to you by Prayag Thaker</span>
-        <a href="https://www.linkedin.com/in/iamprayagthaker/">[LinkedIn]</a>
-    </div>
-</footer>
+</body>
 
 </html>

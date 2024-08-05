@@ -1,121 +1,165 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { MongoClient } = require('mongodb');
+const User = require("./models/sirdb"); // Import User model for RSVP
 
 const app = express();
 const port = process.env.PORT || 3000;
-app.use(express.static("public"));
-app.set('view engine', 'ejs');
 
 // Middleware
+app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static('public'));
+app.set('view engine', 'ejs');
 
-
-
-// MongoDB connection string and database name
-const uri = 'mongodb+srv://prayagadmin:me1234@pdeuer.p8bjgio.mongodb.net/?retryWrites=true&w=majority';
-const client = new MongoClient(uri);
+// MongoDB connection string for EmptyRoom
+const mongoURI = 'mongodb+srv://prayagadmin:me1234@pdeuer.p8bjgio.mongodb.net/?retryWrites=true&w=majority';
+const client = new MongoClient(mongoURI);
 const database = client.db('ListOfEmpty');
 const collection = database.collection('empty-rooms');
 
-// Connect to MongoDB
-client.connect()
-    .then(() => {
-        console.log('Connected to MongoDB');
-        // Start the server after successful MongoDB connection
-        app.listen(port, () => {
-            console.log(`Server is up and running on port ${port}`);
-        });
-    })
-    .catch(err => {
-        console.error('Failed to connect to MongoDB:', err);
-    });
+// Mongoose connection string for RSVP
+mongoose.connect('mongodb+srv://prayagatwork2:admin54321@cluster0.koogrwh.mongodb.net/info?retryWrites=true&w=majority');
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-app.get("/", (req, res) => {
-    res.render('index');
+// Define lab numbers for blocks E and F
+const blockELabs = ["007", "008", "009", "010","011", "012", "107", "108", "109", "110","111A", "112/113", "114","115","116", "206", "207", "208", "209","211", "213", "214", "210","215", "216","213/1","213/C1 PDV-SIE","213/1  AML-SIE", "212.2", "212.1", "212.3","111B","212","212-3","301","302","303","304","305","FFC","CCG1","CCG2","GFC"];
+const blockFLabs = ["002", "003", "004", "102", "103", "104", "202", "203", "204", "501/502"];
+
+// Routes for EmptyRoom
+app.get('/', (req, res) => {
+  res.render('index'); // Serve the index.ejs file
 });
 
-// POST route to handle requests
+app.get('/rsvp/:roomNumber', (req, res) => {
+  const { roomNumber } = req.params;
+  console.log(roomNumber);  // Logs the room number
+  res.render('rsvp', { roomNumber });
+});
+
 app.post('/', async (req, res) => {
-    const mblock = req.body.block;
-    const mday = req.body.day;
-    const mtime = req.body.time;
-    const mtype = req.body.type;
+  const mblock = req.body.block;
+  const mday = req.body.day;
+  const mtime = req.body.time;
+  const mtype = req.body.type;
 
-    console.log('Received request with parameters:');
-    console.log('Block:', mblock);
-    console.log('Day:', mday);
-    console.log('Time:', mtime);
-    console.log('Type:', mtype);
+  console.log('Received request with parameters:');
+  console.log('Block:', mblock);
+  console.log('Day:', mday);
+  console.log('Time:', mtime);
+  console.log('Type:', mtype);
 
-    try {
-        // Find the block schedule based on the block
-        const blockSchedule = await collection.findOne({ block: mblock });
+  try {
+    // Find the block schedule based on the block
+    const blockSchedule = await collection.findOne({ block: mblock });
 
-        console.log('Retrieved block schedule from database:');
-        console.log(blockSchedule);
+    console.log('Retrieved block schedule from database:');
+    console.log(blockSchedule);
 
-        if (!blockSchedule) {
-            console.log('Block not found');
-            res.render('noroom');
-            return res.status(404);
-            // return res.status(404).json({ message: 'Block not found' });
-        }
-
-        if (mtype === "hall") {
-            // classroom is need to find
-            try {
-                // Find rooms with the specified time slot
-                const roomsWithTimeSlot = [];
-                blockSchedule.rooms.forEach(room => {
-                    if (room.schedule[mday] && room.schedule[mday].includes(mtime)) {
-                        roomsWithTimeSlot.push(room.room_number);
-                    }
-                });
-
-                if (roomsWithTimeSlot.length > 0) {
-                    console.log('Rooms with the specified time slot:', roomsWithTimeSlot);
-                    // res.json({ roomsWithTimeSlot });
-                    res.render('outcome', { ejslists: roomsWithTimeSlot });
-                } else {
-                    console.log('No rooms found with the specified time slot');
-                    res.render('noroom');
-                }
-            } catch (err) {
-                console.error('Error finding block schedule:', err);
-                res.status(500).json({ error: 'Internal server error' });
-            }
-        } else {
-            // Laboratory is need to be find
-            try {
-                // Find lab with the specified time slot
-                const labsWithTimeSlot = [];
-                blockSchedule.labs.forEach(lab => {
-                    if (lab.schedule[mday] && lab.schedule[mday].includes(mtime)) {
-                        labsWithTimeSlot.push(lab.lab_number);
-                    }
-                });
-
-                if (labsWithTimeSlot.length > 0) {
-                    console.log('Labs with the specified time slot:', labsWithTimeSlot);
-                    // res.json({ roomsWithTimeSlot });
-                    res.render('outcome', { ejslists: labsWithTimeSlot });
-                } else {
-                    console.log('No Labs found with the specified time slot');
-                    res.render('noroom');
-                }
-            }
-            catch (err) {
-                console.error('Error finding block schedule:', err);
-                res.status(500).json({ error: 'Internal server error' });
-            }
-        }
+    if (!blockSchedule) {
+      console.log('Block not found');
+      res.render('noroom');
+      return res.status(404).send('Block not found');
     }
-    catch (err) {
-            console.error('Error finding block schedule:', err);
-            res.status(500).json({ error: 'Internal server error' });
-        }
-    });
 
+    let availableRooms = [];
+
+    // Check for labs or halls and filter based on block E or F
+    if (mtype === "lab") {
+      const labs = mblock === "E" ? blockELabs : mblock === "F" ? blockFLabs : [];
+      availableRooms = findLabsWithTimeSlot(blockSchedule, mday, mtime, labs);
+
+      // Check if any labs are found
+      if (availableRooms.length === 0) {
+        console.log('No labs found with the specified time slot');
+        res.render('noroom');
+        return res.status(404).send('No labs found with the specified time slot');
+      }
+    } else if (mtype === "hall") {
+      // Find all available rooms and filter out labs
+      availableRooms = findRoomsWithTimeSlot(blockSchedule, mday, mtime);
+
+      // Remove labs based on the selected block
+      const blockLabs = mblock === "E" ? blockELabs : mblock === "F" ? blockFLabs : [];
+      availableRooms = availableRooms.filter(room => !blockLabs.includes(room));
+      
+      // Check if any rooms are found
+      if (availableRooms.length === 0) {
+        console.log('No classrooms found with the specified time slot');
+        res.render('noroom');
+        return res.status(404).send('No classrooms found with the specified time slot');
+      }
+    } else {
+      console.log('Invalid request type');
+      res.status(400).json({ error: 'Invalid request type' });
+      return;
+    }
+
+    console.log(`${mtype === "lab" ? 'Labs' : 'Rooms'} with the specified time slot:`, availableRooms);
+    res.render('outcome', { ejslists: availableRooms });
+
+  } catch (err) {
+    console.error('Error finding block schedule:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+function findLabsWithTimeSlot(blockSchedule, mday, mtime, labNumbers) {
+  const labsWithTimeSlot = [];
+  blockSchedule.rooms.forEach(room => {
+    if (labNumbers.includes(room.room_number) && room.schedule[mday] && room.schedule[mday].includes(mtime)) {
+      labsWithTimeSlot.push(room.room_number);
+    }
+  });
+  return labsWithTimeSlot;
+}
+
+function findRoomsWithTimeSlot(blockSchedule, mday, mtime) {
+  const roomsWithTimeSlot = [];
+  blockSchedule.rooms.forEach(room => {
+    if (room.schedule[mday] && room.schedule[mday].includes(mtime)) {
+      roomsWithTimeSlot.push(room.room_number);
+    }
+  });
+  return roomsWithTimeSlot;
+}
+
+// Routes for RSVP
+app.get('/rsvp', (req, res) => {
+  res.render("request"); // Serve the request.ejs file for RSVP
+});
+
+app.post('/rsvp', async (req, res) => {
+  const user = new User({
+    Name: req.body.Name,
+    RoomNo: req.body.RoomNo,
+    Date: req.body.Date,
+    Details: req.body.Details,
+    ReservationType: req.body.ReservationType,
+    Email: req.body.Email
+  });
+
+  try {
+    await user.save();
+    console.log("User added successfully");
+    res.redirect('/');
+  } catch (error) {
+    console.error("Error adding user:", error);
+    res.status(500).send("Error adding user");
+  }
+});
+
+// Connect to MongoDB and start the server
+client.connect()
+  .then(() => {
+    console.log('Connected to MongoDB');
+     // Start the server after successful MongoDB connection
+    app.listen(port, () => {
+      console.log(`Server is up and running on port ${port}`);
+    });
+  })
+  .catch(err => {
+    console.error('Failed to connect to MongoDB:', err);
+  });
