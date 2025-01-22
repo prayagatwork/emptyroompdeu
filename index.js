@@ -25,8 +25,10 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // Define lab numbers for blocks E and F
-const blockELabs = ["007", "008", "009", "010","011", "012", "107", "108", "109", "110","111A", "112/113", "114","115","116", "206", "207", "208", "209","211", "213", "214", "210","215", "216","213/1","213/C1 PDV-SIE","213/1  AML-SIE", "212.2", "212.1", "212.3","111B","212","212-3","301","302","303","304","305","FFC","CCG1","CCG2","GFC"];
-const blockFLabs = ["002", "003", "004", "102", "103", "104", "202", "203", "204", "501/502"];
+const blockFLabs = ["002","003", "004", "102", "103", "104", "202", "203", "204"];
+const blockELabs = ["007","008", "009", "010", "012", "107", "108", "109", "110", "111A", "112-113", "115", "206", "207", "208", "209", "211", "213", "214", "215", "216", "213/1", "213/C1", "111B", "212", "212/3", "301", "302", "303", "304", "305"];
+const blockDLabs = ["105","106", "107", "006/A", "208/B"];
+const blockCLabs = ["006","007", "008", "014A", "014B", "016", "017", "018", "105", "106", "107", "108", "205", "206", "012", "015B"];
 
 // Routes for EmptyRoom
 app.get('/', (req, res) => {
@@ -68,7 +70,7 @@ app.post('/', async (req, res) => {
 
     // Check for labs or halls and filter based on block E or F
     if (mtype === "lab") {
-      const labs = mblock === "E" ? blockELabs : mblock === "F" ? blockFLabs : [];
+      const labs = mblock === "E" ? blockELabs : mblock === "F" ? blockFLabs : mblock === "D" ? blockDLabs : mblock === "C" ? blockCLabs : [];
       availableRooms = findLabsWithTimeSlot(blockSchedule, mday, mtime, labs);
 
       // Check if any labs are found
@@ -82,7 +84,7 @@ app.post('/', async (req, res) => {
       availableRooms = findRoomsWithTimeSlot(blockSchedule, mday, mtime);
 
       // Remove labs based on the selected block
-      const blockLabs = mblock === "E" ? blockELabs : mblock === "F" ? blockFLabs : [];
+      const blockLabs = mblock === "E" ? blockELabs : mblock === "F" ? blockFLabs : mblock === "D" ? blockDLabs : mblock === "C" ? blockCLabs : [];
       availableRooms = availableRooms.filter(room => !blockLabs.includes(room));
       
       // Check if any rooms are found
