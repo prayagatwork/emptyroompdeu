@@ -91,7 +91,6 @@ app.post('/', async (req, res) => {
       if (availableRooms.length === 0) {
         console.log('No classrooms found with the specified time slot');
         res.render('noroom');
-        return res.status(404).send('No classrooms found with the specified time slot');
       }
     } else {
       console.log('Invalid request type');
