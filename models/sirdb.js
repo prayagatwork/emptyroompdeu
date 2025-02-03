@@ -5,6 +5,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    BlockId: {
+        type: String,
+        required: true
+    },
     RoomNo: {
         type: String,
         required: true
@@ -17,14 +21,13 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    ReservationType: {
-        type: String,
-        required: true,
-        enum: ['temporary', 'permanent']
-    },
     Email: {
         type: String,
         required: true
+    },
+    isAccepted: {  // New field to track accepted requests
+        type: Boolean,
+        default: false  // Default value is false (pending)
     }
 });
 

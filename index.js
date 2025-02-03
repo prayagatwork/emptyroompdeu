@@ -35,11 +35,16 @@ app.get('/', (req, res) => {
   res.render('index'); // Serve the index.ejs file
 });
 
-app.get('/rsvp/:roomNumber', (req, res) => {
-  const { roomNumber } = req.params;
-  console.log(roomNumber);  // Logs the room number
-  res.render('rsvp', { roomNumber });
+app.get('/rsvp', (req, res) => {
+  const roomNumber = req.query.roomNumber;
+  const block = req.query.block;
+
+  console.log("Room Number:", roomNumber);
+  console.log("Block:", block);
+
+  res.render("rsvp", { roomNumber, block });  // Pass values to EJS
 });
+
 
 app.post('/', async (req, res) => {
   const mblock = req.body.block;
@@ -99,7 +104,7 @@ app.post('/', async (req, res) => {
     }
 
     console.log(`${mtype === "lab" ? 'Labs' : 'Rooms'} with the specified time slot:`, availableRooms);
-    res.render('outcome', { ejslists: availableRooms });
+    res.render('outcome', { ejslists: availableRooms, block: mblock });
 
   } catch (err) {
     console.error('Error finding block schedule:', err);
@@ -127,14 +132,16 @@ function findRoomsWithTimeSlot(blockSchedule, mday, mtime) {
   return roomsWithTimeSlot;
 }
 
+
 // Routes for RSVP
 app.get('/rsvp', (req, res) => {
-  res.render("request"); // Serve the request.ejs file for RSVP
+  res.render("rsvp"); // Serve the request.ejs file for RSVP
 });
 
 app.post('/rsvp', async (req, res) => {
   const user = new User({
     Name: req.body.Name,
+    BlockId: req.body.BlockId,
     RoomNo: req.body.RoomNo,
     Date: req.body.Date,
     Details: req.body.Details,
